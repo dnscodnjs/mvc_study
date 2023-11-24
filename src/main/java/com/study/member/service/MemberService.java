@@ -6,6 +6,8 @@ import com.study.member.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service  //스프링 빈으로 등록함
@@ -51,5 +53,19 @@ public class MemberService {
             return null;
         }
 
+    }
+
+    public List<MemberDTO> findAll() {
+        //repository와 관련된건 거의 entity로 주고 받는다
+        List<MemberEntity> memberEntityList = memberRepository.findAll();
+        List<MemberDTO> memberDTOList = new ArrayList<>();
+
+        // entityList 에서 하나씩 꺼내서 DTOList에 옮겨담아
+
+        for (MemberEntity memberEntity : memberEntityList) {
+            memberDTOList.add(MemberDTO.toMemberDTO(memberEntity));
+        }
+
+        return memberDTOList;
     }
 }
